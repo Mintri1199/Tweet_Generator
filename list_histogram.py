@@ -40,9 +40,11 @@ def frequency(keyword, list_of_words):
     return times
 
 
+# Creating a histogram as a list of list
 def listogram(word_list):
     list_of_list = []
 
+    # Inspired by Sam Harrison
     for word in word_list:
         found = False
         for value in list_of_list:
@@ -57,7 +59,21 @@ def listogram(word_list):
     print(list_of_list)
 
 
+# Creating a histogram as a dictionary
+def dictogram(word_list):
+
+    dict_of_histo = {}
+
+    for word in word_list:
+        if word not in dict_of_histo:
+            dict_of_histo[word] = 1
+        else:
+            dict_of_histo[word] += 1
+
+    print(dict_of_histo)
+
+
 #listogram(clean_up_text(file))
-print(clean_up_text(file))
+dictogram(clean_up_text(file))
 
 
