@@ -40,13 +40,13 @@ def frequency(keyword, list_of_words):
     return times
 
 
-# Creating a histogram as a list of list
+# Creating a histogram as a list of lists
 def listogram(word_list):
     list_of_list = []
 
     # Inspired by Sam Harrison
     for word in word_list:
-        found = False
+        found = False                       # Flag to signify duplication
         for value in list_of_list:
             if word in value[0]:
                 found = True
@@ -73,7 +73,31 @@ def dictogram(word_list):
     print(dict_of_histo)
 
 
-#listogram(clean_up_text(file))
-dictogram(clean_up_text(file))
+# Creating a histogram as a list of tuples
+def tupogram(word_list):
+    list_of_tuple = list()
 
+    for word in word_list:
+        found = False
+        if not list_of_tuple:
+            list_of_tuple.append((word, 1))
+        else:
+            for index, value in enumerate(list_of_tuple):
+                if value[0] == word:
+                    found = True                            # If the word equates to the tuple index 0
+                    num = value[1] + 1                      # Store the freq number incremented by 1
+                    list_of_tuple.pop(index)                # pop the current tuple
+                    list_of_tuple.append((word, num))       # Append a new one with same word and incremented num
+                    break
+            if not found:
+                list_of_tuple.append((word, 1))             # Else, append tuple with new word and 1
+
+    print(list_of_tuple)
+
+
+fish = ["red", "fish", "yellow", "fish", "green", "fish"]
+
+#listogram(clean_up_text(file))
+#dictogram(clean_up_text(file))
+tupogram(fish)
 
