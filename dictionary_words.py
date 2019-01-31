@@ -1,35 +1,28 @@
 import random
 import sys
+from datetime import datetime
 from pathlib import Path
 
 
 def random_word(num):
-    # Turn the argument into num 
-    wanted_word = int(num)
+    num = int(num)
+    # Turn the argument into num
 
     data_folder = Path("/usr/share/dict/words")
 
     file_to_open = data_folder
 
-    f = open(file_to_open)
+    with open(file_to_open, 'r') as f:
+        dict_list = f.readlines()
 
-    # The words file is not a list thus we need to split it in order to get a word for a index
-    # If not we will get a letter for our index
-    dict_list = f.read().split()
-    
-    words_list = []
-
-    while len(words_list) != wanted_word:
-
-        random_index = random.randint(0, len(dict_list) - 1)
-        selected_word = dict_list[random_index]
-
-        if selected_word not in words_list:
-            words_list.append(selected_word)
-
-    print(words_list)
+        words_list = random.choices(dict_list, k=num)
+        for index, word in enumerate(words_list):
+            words_list[index] = word.rstrip()
+        print(" ".join(words_list))
 
 
 if __name__ == "__main__":
+    start_time = datetime.now()
     param = sys.argv[1:]
     random_word(param[0])
+    print(datetime.now() - start_time)
