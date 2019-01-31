@@ -77,20 +77,18 @@ def dictogram(word_list):
 def tupogram(word_list):
     list_of_tuple = list()
 
+    list_of_tuple.append((word_list[0], 1))
     for word in word_list:
         found = False
-        if not list_of_tuple:
+        for index, value in enumerate(list_of_tuple):
+            if value[0] == word:                        # If the word equates to the tuple index 0
+                found = True                            # Change the flag to True to prevent adding extra tuples
+                num = value[1] + 1                      # Store the freq number incremented by 1
+                list_of_tuple.pop(index)                # pop the current tuple
+                list_of_tuple.append((word, num))       # Append a new one with same word and incremented num
+                break                                   # Break to prevent the loop from going once it found the word
+        if not found:
             list_of_tuple.append((word, 1))
-        else:
-            for index, value in enumerate(list_of_tuple):
-                if value[0] == word:
-                    found = True                            # If the word equates to the tuple index 0
-                    num = value[1] + 1                      # Store the freq number incremented by 1
-                    list_of_tuple.pop(index)                # pop the current tuple
-                    list_of_tuple.append((word, num))       # Append a new one with same word and incremented num
-                    break
-            if not found:
-                list_of_tuple.append((word, 1))             # Else, append tuple with new word and 1
 
     print(list_of_tuple)
 
@@ -99,5 +97,5 @@ fish = ["red", "fish", "yellow", "fish", "green", "fish"]
 
 #listogram(clean_up_text(file))
 #dictogram(clean_up_text(file))
-tupogram(fish)
+tupogram(clean_up_text(file))
 
