@@ -14,11 +14,12 @@ def random_word(num):
 
     with open(file_to_open, 'r') as f:
         dict_list = f.readlines()
+        word_list = []
 
-        words_list = random.choices(dict_list, k=num)
-        for index, word in enumerate(words_list):
-            words_list[index] = word.rstrip()
-        print(" ".join(words_list))
+        for i in range(0, num):
+            word_list.append(dict_list[random.randrange(len(dict_list))].strip())
+
+        print(" ".join(word_list))
 
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ def clean_up_text(file_name):
         return text_list
 
 
-# This function will takes a histogram argument return the total count of unique words in the histogram
+# This function will takes a list of words argument and return the list of unique words
 def unique_words(words_list):
     list_of_unique_words = []
     for word in words_list:
@@ -55,8 +55,7 @@ def listogram(word_list):
         if not found:
             list_of_list.append([word, 1])
 
-    print(len(list_of_list))
-    print(list_of_list)
+    return list_of_list
 
 
 # Creating a histogram as a dictionary
@@ -93,9 +92,9 @@ def tupogram(word_list):
     print(list_of_tuple)
 
 
-fish = ["red", "fish", "yellow", "fish", "green", "fish"]
+# fish = ["red", "fish", "yellow", "fish", "green", "fish"]
 
 #listogram(clean_up_text(file))
 #dictogram(clean_up_text(file))
-tupogram(clean_up_text(file))
+#tupogram(clean_up_text(file))
 
