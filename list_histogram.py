@@ -51,6 +51,7 @@ def listogram(word_list):
             if word in value[0]:
                 found = True
                 value[1] += 1
+                break
 
         if not found:
             list_of_list.append([word, 1])
@@ -69,32 +70,30 @@ def dictogram(word_list):
         else:
             dict_of_histo[word] += 1
 
-    print(dict_of_histo)
+    return dict_of_histo
 
 
 # Creating a histogram as a list of tuples
 def tupogram(word_list):
     list_of_tuple = list()
 
-    list_of_tuple.append((word_list[0], 1))
     for word in word_list:
         found = False
         for index, value in enumerate(list_of_tuple):
             if value[0] == word:                        # If the word equates to the tuple index 0
                 found = True                            # Change the flag to True to prevent adding extra tuples
                 num = value[1] + 1                      # Store the freq number incremented by 1
-                list_of_tuple.pop(index)                # pop the current tuple
+                del list_of_tuple[index]               # pop the current tuple
                 list_of_tuple.append((word, num))       # Append a new one with same word and incremented num
                 break                                   # Break to prevent the loop from going once it found the word
         if not found:
             list_of_tuple.append((word, 1))
 
-    print(list_of_tuple)
+    return list_of_tuple
 
 
 # fish = ["red", "fish", "yellow", "fish", "green", "fish"]
-
-#listogram(clean_up_text(file))
-#dictogram(clean_up_text(file))
-#tupogram(clean_up_text(file))
-
+word_list = clean_up_text(file)
+#print(listogram(word_list))
+#print(tupogram(word_list))
+#print(dictogram(word_list))

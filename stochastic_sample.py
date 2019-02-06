@@ -8,9 +8,9 @@ def sample(histogram):                      # In this example histogram is going
     for value in histogram:
         total_sum += value[1]
 
+    random_num = random.uniform(0, 1)
     for value in histogram:
-        random_num = random.uniform(0, 1)
-        cumulative_probability += value[1]/total_sum  # increment the cumulative_probability by the quotient of the current word to the total word in the histogram
+        cumulative_probability += value[1]/total_sum  # increment the probability by the quotient of the current word to the total word in the histogram
         if cumulative_probability >= random_num:
             return value[0]
 
@@ -21,7 +21,7 @@ def multiple_runs(histogram):
     for item in histogram:
         count_dict[item[0]] = 0
 
-    for i in range(0, 1000):
+    for i in range(0, 10000):
         count_dict[sample(histogram)] += 1
 
     print(count_dict)
