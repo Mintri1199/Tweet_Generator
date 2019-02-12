@@ -3,6 +3,7 @@ import random
 file = "queen_reign.txt"
 
 
+'''TODO: Redo comment convention'''
 # This function will clean up the text file of non alphabetic characters
 def clean_up_text(file_name):
     with open(file_name) as f:
@@ -83,7 +84,7 @@ def tupogram(word_list):
             if value[0] == word:                        # If the word equates to the tuple index 0
                 found = True                            # Change the flag to True to prevent adding extra tuples
                 num = value[1] + 1                      # Store the freq number incremented by 1
-                del list_of_tuple[index]               # pop the current tuple
+                del list_of_tuple[index]                # pop the current tuple
                 list_of_tuple.append((word, num))       # Append a new one with same word and incremented num
                 break                                   # Break to prevent the loop from going once it found the word
         if not found:
