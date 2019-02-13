@@ -3,8 +3,9 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-'''TODO: Redo Comment convention'''
+
 def random_word(num):
+    """ This function will take number and return a string with random words from the dictionary file"""
     num = int(num)
     # Turn the argument into num
 

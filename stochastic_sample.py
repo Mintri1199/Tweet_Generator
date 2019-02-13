@@ -1,4 +1,4 @@
-from list_histogram import *
+from histograms import *
 import sys
 
 
