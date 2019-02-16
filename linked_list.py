@@ -125,6 +125,67 @@ class LinkedList(object):
 
         return None                     # Went through the list an found nothing
 
+    def insert_node_after(self, data, indexed_node, next_node):
+        """This is a helper function for inserting node after a specific index"""
+        new_node = Node(data)
+
+        if next_node is None:    # Checking whether the current node is the tail
+            indexed_node.next = new_node
+            self.tail = new_node
+
+        else:
+            indexed_node.next = new_node
+            new_node.next = next_node
+
+    def begin_insert_after(self, data, index):
+        """This function finds the specific node to insert a new node after it"""
+        index = int(index)
+        size = self.recursive_wrapper() - 1
+        if index < 0:  # Is the index less than the linked list?
+            raise IndexError(print("The index does not exist"))
+
+        if index > size:  # Is the index bigger than the linked list?
+            raise IndexError(print("The index does not exist"))
+
+        current_node = self.head
+        counter = 0                                           # The counter we going to use to find a specific node
+
+        while current_node is not None and counter != index:  # This while loop will get the index node we need
+            counter += 1
+            current_node = current_node.next
+
+        self.insert_node_after(data, current_node, current_node.next)
+
+    def insert_before(self, data, indexed_node, previous_node):
+        """This function add the new node to before a specific node"""
+        new_node = Node(data)
+
+        if previous_node is None:       # Checking if the indexed node is the head
+            self.head = new_node
+            new_node.next = indexed_node
+
+        else:
+            previous_node.next = new_node
+            new_node.next = indexed_node
+
+    def begin_insert_before(self, data, index):
+        """This function finds the specific node to insert a new node before it"""
+        index = int(index)
+        size = self.recursive_wrapper() - 1
+        if index < 0:
+            raise IndexError("Invalid Index")
+        if index > size:
+            raise IndexError("Invalid Index")
+        previous_node = None                    # Remove this when implemented previous attribute
+        current_node = self.head
+        counter = 0
+
+        while current_node is not None and counter != index:
+            previous_node = current_node
+            current_node = current_node.next
+
+        self.insert_before(data, current_node, previous_node)
+
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
@@ -172,7 +233,42 @@ def test_recursive_count():
         print('append({!r})'.format(item))
         ll.append(item)
         print('list: {}'.format(ll))
-    print(ll.recursive_wrapper())
+    print("length: {}".format(ll.recursive_wrapper()))
+
+
+def test_insert_after():
+    ll = LinkedList()
+    for item in ['A', 'B', 'C']:
+        print('append({!r})'.format(item))
+        ll.append(item)
+        print('list: {}'.format(ll))
+    ll.begin_insert_after("D", 2)
+    print(ll)
+    print(ll.head)
+    print(ll.tail)
+
+    # ll.begin_insert_after("Fail", 4)
+    # print(ll)
+
+    # ll.begin_insert_after("Fail Again", -1)
+    # print(ll)
+
+
+def test_insert_before():
+    ll = LinkedList()
+    for item in ['A', 'B', 'C']:
+        print('append({!r})'.format(item))
+        ll.append(item)
+        print('list: {}'.format(ll))
+    ll.begin_insert_before("1", 0)
+    print(ll)
+    print(ll.head)
+    print(ll.tail)
+
+    # ll.begin_insert_before("Fail", 4)
+    # print(ll)
+    ll.begin_insert_before("Fail Again", -1)
+    print(ll)
 
 
 def test_linked_list():
@@ -204,6 +300,5 @@ def test_linked_list():
 
 
 if __name__ == '__main__':
-    test_linked_list()
-    test_recursive_count()
+    test_insert_before()
 
