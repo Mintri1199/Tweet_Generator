@@ -62,6 +62,21 @@ class LinkedList(object):
 
         return counter
 
+    def get_length_recursive(self, node):
+        """
+            This function count the number of node in a linked list recursively
+            Note: this function is work by assuming the linked list is a singly linked list.
+            thus it won't utilized the tail
+        """
+        if not node:   # Base case
+            return 0
+        else:
+            return 1 + self.get_length_recursive(node.next)     # Call the function again with the next node
+
+    def recursive_wrapper(self):
+        """This function wrap the get_length_recursive function"""
+        return self.get_length_recursive(self.head)
+
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
@@ -148,7 +163,16 @@ class LinkedList(object):
                 current_node = current_node.next
 
         if not found:
-            raise ValueError()
+            raise ValueError(print(""))
+
+
+def test_recursive_count():
+    ll = LinkedList()
+    for item in ['A', 'B', 'C']:
+        print('append({!r})'.format(item))
+        ll.append(item)
+        print('list: {}'.format(ll))
+    print(ll.recursive_wrapper())
 
 
 def test_linked_list():
@@ -181,3 +205,5 @@ def test_linked_list():
 
 if __name__ == '__main__':
     test_linked_list()
+    test_recursive_count()
+
