@@ -181,6 +181,7 @@ class LinkedList(object):
         counter = 0
 
         while current_node is not None and counter != index:
+            counter += 1
             previous_node = current_node
             current_node = current_node.next
 
@@ -260,15 +261,15 @@ def test_insert_before():
         print('append({!r})'.format(item))
         ll.append(item)
         print('list: {}'.format(ll))
-    ll.begin_insert_before("1", 0)
+    ll.begin_insert_before("1", 2)
     print(ll)
     print(ll.head)
     print(ll.tail)
 
     # ll.begin_insert_before("Fail", 4)
     # print(ll)
-    ll.begin_insert_before("Fail Again", -1)
-    print(ll)
+    # ll.begin_insert_before("Fail Again", -1)
+    # print(ll)
 
 
 def test_linked_list():
