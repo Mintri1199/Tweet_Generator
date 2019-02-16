@@ -5,6 +5,8 @@ file = "queen_reign.txt"
 
 '''TODO: Redo comment convention'''
 # This function will clean up the text file of non alphabetic characters
+
+
 def clean_up_text(file_name):
     with open(file_name) as f:
 

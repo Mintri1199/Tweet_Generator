@@ -7,11 +7,8 @@ from pathlib import Path
 def random_word(num):
     """ This function will take number and return a string with random words from the dictionary file"""
     num = int(num)
-    # Turn the argument into num
 
-    data_folder = Path("/usr/share/dict/words")
-
-    file_to_open = data_folder
+    file_to_open = Path("/usr/share/dict/words")
 
     with open(file_to_open, 'r') as f:
         dict_list = f.readlines()

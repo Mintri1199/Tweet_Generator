@@ -1,5 +1,5 @@
 import random, sys
-
+from histograms import clean_up_text
 
 word_list = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     params = sys.argv[1:3]
     num = int(params[0])
-    start = Markov(word_list)
+    start = Markov(clean_up_text("queen_reign.txt"))
     start.getting_types()
     start.logic()
     start.multiple_runs(num)
