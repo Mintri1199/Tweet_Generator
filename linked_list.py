@@ -39,7 +39,7 @@ class LinkedList(object):
         node = self.head  # O(1) time to assign new variable
         # Loop until node is None, which is one node too far past tail
         while node is not None:  # Always n iterations because no early return
-            items.append(node)  # O(1) time (on average) to append to list
+            items.append(node.data)  # O(1) time (on average) to append to list
             # Skip to next node to advance forward in linked list
             node = node.next  # O(1) time to reassign variable
         # Now list contains items from all nodes
@@ -80,6 +80,7 @@ class LinkedList(object):
                 self.tail = new_node
         else:                               # The list is empty
             self.head = new_node
+            self.tail = new_node
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -92,7 +93,7 @@ class LinkedList(object):
             self.head = new_node
             new_node.next = current_head_node
         else:
-            self.append(new_node)
+            self.append(new_node.data)
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -102,8 +103,8 @@ class LinkedList(object):
         # TODO: Check if node's data satisfies given quality function
         node = self.head
         while node:                     # Use a while loop since we can't get the index of the list
-            if node.data == quality:    # If the current node's data is the quality return it
-                return node
+            if quality(node.data):      # If the current node's data is the quality return it
+                return node.data
             else:
                 node = node.next        # If not then go to next
 
@@ -119,36 +120,35 @@ class LinkedList(object):
 
         current_node = self.head
         previous_node = None
+        found = False
+        while current_node:
+            if self.head.data == item:              # If the head is the target node
+                if self.head.next is not None:      # If the head points to a node
+                    self.head = self.head.next      # Reassign the head
+                    found = True
+                    break
+                else:
+                    self.head = None                # The list only have one node
+                    self.tail = None
+                    found = True
+                    break
 
-        try:
-            while current_node:
-                if self.head.data == item:               # If the head is the target node
-                    if self.head.next is not None:      # If the head points to a node
-                        self.head = self.head.next      # Reassign the head
-                        break
-                    else:
-                        self.head = None                # The list only have one node
-                        break
+            elif current_node.data == item:         # found the target node and the node is not the head
+                if current_node == self.tail:       # Is the tail the targeted node?
+                    previous_node.next = None
+                    self.tail = previous_node
+                    found = True
+                    break
+                else:                               # The targeted node points to something
+                    previous_node.next = current_node.next
+                    found = True
+                    break
+            else:                                   # Not the target node
+                previous_node = current_node
+                current_node = current_node.next
 
-                elif current_node.data == item:         # found the target node and the node is not the head
-                    if current_node == self.tail:       # Is the tail the targeted node?
-                        previous_node.next = None
-                        if previous_node == self.head:  # If the previous node is the head (The only item left)
-                            self.tail = None
-                        else:
-                            self.tail = previous_node
-                        break
-                    else:                               # The targeted node points to something
-                        previous_node.next = current_node.next
-                        break
-
-                else:                                   # Not the target node
-                    previous_node = current_node
-                    current_node = current_node.next
-
-        except ValueError:
-            print('Item not found: {}'.format(item))
-        # Hint: raise ValueError('Item not found: {}'.format(item))
+        if not found:
+            raise ValueError()
 
 
 def test_linked_list():
