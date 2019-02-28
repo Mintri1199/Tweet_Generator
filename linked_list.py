@@ -47,14 +47,17 @@ class LinkedList(object):
 
     def is_empty(self):
         """Return a boolean indicating whether this linked list is empty."""
-        return self.head is None
+        return self.head is None    # O(1) time to check one variable
 
     def length(self):
         """Return the length of this linked list by traversing its nodes.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        This function will run O(n) for nodes in the list because we have
+        to iterate over all n nodes and count 1 for each
+        TODO: Change the code of this list to make this function run O(1)
+        """
 
         counter = 0
-        # TODO: Loop through all nodes and count one for each
+
         node = self.head
         while node is not None:
             counter += 1
@@ -74,18 +77,17 @@ class LinkedList(object):
             return 1 + self.get_length_recursive(node.next)     # Call the function again with the next node
 
     def recursive_wrapper(self):
-        """This function wrap the get_length_recursive function"""
+        """This function wrap the get_length_recursive function just for fun, the run time will be O(n)"""
         return self.get_length_recursive(self.head)
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(1) since we just add to the tail of the linked list"""
 
-        # TODO: Create new node to hold given item
         new_node = Node(item)
         current_head = self.head
         current_tail = self.tail
-        # TODO: Append node after tail, if it exists
+
         if not self.is_empty():             # Does the linked list have stuffs?
             if self.tail:                       # Does the tail exist?
                 current_tail.next = new_node
@@ -99,11 +101,12 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
-        new_node = Node(item)
-        # TODO: Create new node to hold given item
-        # TODO: Prepend node before head, if it exists
-        if self.head:                       # Does the head exist?
+        The running time would be O(1) since we are changing the head and not looping through the linked list.
+        """
+
+        new_node = Node(item)   # O(1) constant time to create a new Node
+
+        if self.head:
             current_head_node = self.head
             self.head = new_node
             new_node.next = current_head_node
@@ -112,11 +115,17 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes to find item where quality(item) is True
-        # TODO: Check if node's data satisfies given quality function
+        TODO: Best case running time: O(1) if the data is in either the head or tail of the linked list
+        TODO: Worst case running time: O(n - 2) since the data is near the tail"""
+        """
+        if quality(self.head):
+            return self.head.data
+
+        if quality(self.tail):
+            return self.tail.data
+        """
         node = self.head
+
         while node:                     # Use a while loop since we can't get the index of the list
             if quality(node.data):      # If the current node's data is the quality return it
                 return node.data
@@ -187,14 +196,30 @@ class LinkedList(object):
 
         self.insert_before(data, current_node, previous_node)
 
+    def replace(self, key, new_value):
+        """ This function will find the or_node then change the value of it with new_value"""
+        node = self.head
+
+        found = False
+
+        while node is not None:
+            if node.data[0] == key:
+                node.data = (key, new_value)
+                break
+            node = node.next
+
+        if not found:
+            raise KeyError(print("Can not find the node to replace"))
+
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        TODO: Best case running time: O(1) Why and under what conditions?
+        TODO: Worst case running time: O(n) if the program have to loop through every items in the linked list"""
 
         current_node = self.head
         previous_node = None
         found = False
+
         while current_node:
             if self.head.data == item:              # If the head is the target node
                 if self.head.next is not None:      # If the head points to a node
@@ -222,7 +247,7 @@ class LinkedList(object):
                 current_node = current_node.next
 
         if not found:
-            raise ValueError(print(""))
+            raise ValueError(print("Can't find the item to delete"))
 
 
 def test_recursive_count():
