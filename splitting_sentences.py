@@ -102,14 +102,15 @@ class ActualMarkovChain:
                         found_stop = True
                         counter = inner_key_value[1]
                         outer_key_value[1].remove(inner_key_value)
-                        outer_key_value.append((stop_key, counter + 1))
+                        outer_key_value[1].append((stop_key, counter + 1))
                         break
 
                 if not found_stop:  # Create the first stop token
                     outer_key_value[1].append((stop_key, 1))
 
         if not found_histogram:  # Creating the histogram that the stop token is it first token
-            self.list_of_histograms.append([key, [(stop_key, 1)]])
+            new_item = [key, [(stop_key, 1)]]
+            self.list_of_histograms.append(new_item)
 
     def histogram(self, one_sentence):
         """ This function will take one sentence and make a histogram
@@ -130,7 +131,7 @@ class ActualMarkovChain:
             self.appending_to_list_of_histograms(current_word, next_word)
 
 
-markov = ActualMarkovChain("smaller_text.txt")
+markov = ActualMarkovChain("queen_reign.txt")
 
 markov.run()
 
