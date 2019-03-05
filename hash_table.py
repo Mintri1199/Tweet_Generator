@@ -114,50 +114,23 @@ class HashTable(object):
             bucket.append((key, value))
             self.size += 1
 
-
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
         TODO: Running time: O(1) if the desired node is the first node of a bucket.
         O(n) is the worst case since the program has to traverse through all the items in the buckets.
         """
         bucket = self.buckets[self._bucket_index(key)]
-        current_node = bucket.head
-        previous_node = None
-        found = False
 
-        while current_node is not None:
-            if bucket.head.data[0] == key:  # If the head is the target node
-                if bucket.head.next is not None:  # If the head points to a node
-                    bucket.head = bucket.head.next  # Reassign the head
-                    found = True
-                    self.size -= 1
-                    break
-                else:
-                    bucket.head = None  # The list only have one node
-                    bucket.tail = None
-                    found = True
-                    self.size = 0
-                    break
-
-            elif current_node.data[0] == key:  # found the target node and the node is not the head
-                if current_node == bucket.tail:  # Is the tail the targeted node?
-                    previous_node.next = None
-                    bucket.tail = previous_node
-                    found = True
-                    self.size -= 1
-                    break
-
-                else:  # The targeted node points to something
-                    previous_node.next = current_node.next
-                    found = True
-                    self.size -= 1
-                    break
-            else:  # Not the target node
-                previous_node = current_node
-                current_node = current_node.next
-
-        if not found:
+        key_value = bucket.find(lambda item: item[0] == key)
+        print(key_value)
+        if key_value == None :
             raise KeyError('Key not found: {}'.format(key))
+        else:
+            bucket.delete(key_value)
+            self.size -= 1
+
+        # use linkedlist.find() to get the value the match the key
+        
 
 
 def test_hash_table():
