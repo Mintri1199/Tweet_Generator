@@ -81,7 +81,8 @@ class SecondOrderMarkov:
     def creating_histograms(self, list_of_sentences):
         # list_of_sentences = [str]
         for sentence in list_of_sentences:
-            sentence.lower()
+            sentence = sentence.lower().replace(".", "")
+
             list_of_words = sentence.split()
             if len(list_of_words) == 1:
                 print(list_of_words)
@@ -99,11 +100,36 @@ class SecondOrderMarkov:
                 self.append_stop_token(last_pair)
 
     def run(self):
-        """ This function will run the necessary functions to generate a Markov Chain sentence"""
+        """ This function will run the necessary functions to generate a Second Order Markov Chain sentence"""
         self.clean_up_text()
         self.creating_histograms(self.sentences_splitting())
 
-        print(self.dictionary_of_histogram)
+        self.sampling(self.start_the_sentence())
+        # print(self.list_of_tuple)
+        # print(self.dictionary_of_histogram)
+
+    def start_the_sentence(self):
+        """ This function will return a word pair to that start the sentence """
+        total_count = 0
+        cum_prob = 0.0
+        for key in self.list_of_tuple:
+            found_histogram = self.dictionary_of_histogram[key]  # Get the histogram with the key in the list of tuples
+            total_count += found_histogram[self.start_token]  # Get the counter value with the start token
+
+        random_num = random.uniform(0, 1)
+        for key in self.list_of_tuple:
+            found_histogram = self.dictionary_of_histogram[key]  # Get the histogram with the key in the list of tuples
+            value = found_histogram[self.start_token]  # Getting the counter value
+            cum_prob += value/total_count
+
+            if cum_prob >= random_num:
+                return key
+
+    def sampling(self, start_pair):
+        """ This function will use start pair and then generate a sentence with it."""
+        first_cap = start_pair[0].capitalize()  # Capitalize the first letter of the first word
+        gen_sentence = "{} {}".format(first_cap, start_pair[1])
+        print(gen_sentence)
 
 
 markov = SecondOrderMarkov("smaller_text.txt")

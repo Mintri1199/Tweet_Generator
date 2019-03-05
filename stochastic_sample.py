@@ -3,6 +3,8 @@ import sys
 
 
 '''TODO: Redo Comment convention'''
+
+
 def sample(histogram):                      # In this example histogram is going to be a list of list
     total_sum = 0                           # Get the total number of frequency in the histogram
     cumulative_probability = 0.0            # cumulative_probability to prevent the function from not picking anything
